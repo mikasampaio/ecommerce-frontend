@@ -6,6 +6,7 @@ import {
   InputLeftElement,
   InputProps,
   InputRightElement,
+  Stack,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -34,7 +35,7 @@ export default function InputText({
         field: { onChange, onBlur, value },
         fieldState: { error },
       }) => (
-        <>
+        <Stack width="100%">
           {label && (
             <FormLabel
               margin="0"
@@ -77,7 +78,7 @@ export default function InputText({
           {error?.message && (
             <FormErrorMessage>{error.message}</FormErrorMessage>
           )}
-        </>
+        </Stack>
       )}
     />
   );

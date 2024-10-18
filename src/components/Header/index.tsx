@@ -9,13 +9,10 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "@chakra-ui/react";
 import { useState } from "react";
 import InputText from "../Input";
-import { FormProvider, useForm } from "react-hook-form";
 
 export default function Header() {
   const router = useRouter();
   const [showSearch, setShowSearch] = useState(false);
-
-  const methods = useForm();
 
   const options = [
     {
@@ -45,37 +42,35 @@ export default function Header() {
 
   return (
     <Container>
-      <FormProvider {...methods}>
-        <Link href="/home">Página inicial</Link>
+      <Link href="/home">Página inicial</Link>
 
-        <ContainerItems>
-          {options.map((option) =>
-            option.label == "Pesquisa" ? (
-              showSearch ? (
-                <InputText
-                  name={"search"}
-                  label={""}
-                  placeholder="Pesquisar Produto"
-                  rightIcon={<AiOutlineSearch fontSize="1.5rem" />}
-                />
-              ) : (
-                <ButtonIcon onMouseDown={option.onClick}>
-                  {option.icon}
-                </ButtonIcon>
-              )
+      <ContainerItems>
+        {options.map((option) =>
+          option.label == "Pesquisa" ? (
+            showSearch ? (
+              <InputText
+                name={"search"}
+                label={""}
+                placeholder="Pesquisar Produto"
+                rightIcon={<AiOutlineSearch fontSize="1.5rem" />}
+              />
             ) : (
-              <ButtonIcon
-                key={option.label}
-                onClick={() => {
-                  router.push(option?.url as string);
-                }}
-              >
+              <ButtonIcon onMouseDown={option.onClick}>
                 {option.icon}
               </ButtonIcon>
             )
-          )}
-        </ContainerItems>
-      </FormProvider>
+          ) : (
+            <ButtonIcon
+              key={option.label}
+              onClick={() => {
+                router.push(option?.url as string);
+              }}
+            >
+              {option.icon}
+            </ButtonIcon>
+          )
+        )}
+      </ContainerItems>
     </Container>
   );
 }

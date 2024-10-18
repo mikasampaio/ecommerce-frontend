@@ -4,7 +4,8 @@ export const Container = styled.header`
   display: flex !important;
   flex-direction: row;
   border-bottom: 1px solid rgb(0, 0, 0, 0.2);
-  padding-block: 1.5rem;
+  /* padding-block: 1.5rem; */
+  padding-bottom: 1rem;
   justify-content: space-between;
   width: 100%;
 `;
