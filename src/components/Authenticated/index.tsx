@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import Header from "../Header";
-import { Box } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
 
 interface AuthenticationProps {
@@ -24,7 +24,9 @@ export default function Authenticated({ children }: AuthenticationProps) {
       >
         <Header />
 
-        {children}
+        <Stack paddingY="1rem" gap="1rem">
+          {children}
+        </Stack>
       </Box>
     </FormProvider>
   );

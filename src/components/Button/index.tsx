@@ -7,7 +7,7 @@ type ButtonProps = ButtonCProps & {
   label: string;
 };
 
-export default function Button({ label, ...props }: ButtonProps) {
+export default function Button({ label, w, ...props }: ButtonProps) {
   return (
     <ButtonChakra
       color="white"
@@ -15,7 +15,7 @@ export default function Button({ label, ...props }: ButtonProps) {
       _hover={{
         opacity: 0.9,
       }}
-      w="100%"
+      w={w || "100%"}
       {...props}
     >
       {label}
