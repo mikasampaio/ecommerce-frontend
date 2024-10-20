@@ -9,6 +9,7 @@ export const theme = extendTheme({
       200: "rgba(0, 0, 0, 0.08)",
       300: "rgba(0, 0, 0, 0.16)",
     },
+    error: "#C53030",
   },
   breakpoints: {
     base: "0px",

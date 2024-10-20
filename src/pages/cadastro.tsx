@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import InputText from "@/components/Input";
 import Button from "@/components/Button";
-import { HStack, Link, Text, VStack } from "@chakra-ui/react";
+import { HStack, Link, Text, useToast, VStack } from "@chakra-ui/react";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -10,18 +10,48 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterProps, RegisterSchema } from "@/schemas/register";
+import { ErrorHandler } from "@/errors/errorHandler";
+import { UserService, UserType } from "@/services/user";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const methods = useForm();
+  const toast = useToast();
+  const router = useRouter();
+  const methods = useForm<RegisterProps>({
+    resolver: zodResolver(RegisterSchema),
+  });
+  const { handleSubmit } = methods;
+
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
+
+  const onSubmit = async (data: RegisterProps) => {
+    try {
+      await UserService.registerUser({
+        ...data,
+        password: data.confirmPassword,
+        type: UserType.USER,
+      });
+
+      toast({
+        position: "top-right",
+        duration: 3000,
+        isClosable: true,
+        title: "Sucesso",
+        description: "Cadastro realizado com sucesso",
+        status: "success",
+      });
+
+      router.push("/login");
+    } catch (error) {
+      ErrorHandler({ error, defaultMessage: "Erro ao realizar cadastro", toast });
+    }
+  };
 
   return (
     <FormProvider {...methods}>
-      <HStack
-        w="100vw"
-        h="100vh"
-        p={{ base: "1rem", sm: "0" }}
-      >
+      <HStack w="100vw" h="100vh" p={{ base: "1rem", sm: "0" }}>
         <VStack
           width="100%"
           h="100%"
@@ -61,6 +91,7 @@ export default function Login() {
               placeholder="example@example.com"
               leftIcon={<AiOutlineMail />}
             ></InputText>
+
             <InputText
               name="password"
               label="Escolha a senha"
@@ -79,7 +110,30 @@ export default function Login() {
                 )
               }
             />
-            <Button label="Criar conta"></Button>
+
+            <InputText
+              name="confirmPassword"
+              label="Escolha a senha"
+              type={isVisiblePassword ? "text" : "password"}
+              placeholder="********"
+              leftIcon={<AiOutlineLock />}
+              rightIcon={
+                isVisiblePassword ? (
+                  <AiOutlineEye
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                ) : (
+                  <AiOutlineEyeInvisible
+                    onClick={() => setIsVisiblePassword(!isVisiblePassword)}
+                  />
+                )
+              }
+            />
+
+            <Button
+              label="Criar conta"
+              onClick={handleSubmit(onSubmit)}
+            ></Button>
           </VStack>
 
           <Text>

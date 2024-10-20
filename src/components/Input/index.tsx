@@ -1,5 +1,4 @@
 import {
-  FormErrorMessage,
   FormLabel,
   Input,
   InputGroup,
@@ -7,6 +6,7 @@ import {
   InputProps,
   InputRightElement,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Controller, useFormContext } from "react-hook-form";
@@ -34,52 +34,52 @@ export default function InputText({
       render={({
         field: { onChange, onBlur, value },
         fieldState: { error },
-      }) => (
-        <Stack width="100%">
-          {label && (
-            <FormLabel
-              margin="0"
-              fontWeight="normal"
-              fontSize=".937rem"
-              htmlFor={name}
-            >
-              {label}
-            </FormLabel>
-          )}
-
-          <InputGroup>
-            {leftIcon && (
-              <InputLeftElement pointerEvents="none">
-                {leftIcon}
-              </InputLeftElement>
+      }) => {
+        return (
+          <Stack width="100%">
+            {label && (
+              <FormLabel
+                margin="0"
+                fontWeight="normal"
+                fontSize=".937rem"
+                htmlFor={name}
+              >
+                {label}
+              </FormLabel>
             )}
 
-            <Input
-              placeholder={placeholder}
-              onBlur={onBlur}
-              onChange={onChange}
-              value={value}
-              _focus={{
-                border: "0",
-              }}
-              focusBorderColor="primary"
-              border="1px solid"
-              borderColor={error?.message ? "red.500" : "gray.300"}
-              {...rest}
-            />
+            <InputGroup>
+              {leftIcon && (
+                <InputLeftElement pointerEvents="none">
+                  {leftIcon}
+                </InputLeftElement>
+              )}
 
-            {rightIcon && (
-              <InputRightElement pointerEvents="none">
-                {rightIcon}
-              </InputRightElement>
-            )}
-          </InputGroup>
+              <Input
+                placeholder={placeholder}
+                onBlur={onBlur}
+                onChange={onChange}
+                value={value}
+                _focus={{
+                  border: "0",
+                }}
+                focusBorderColor="primary"
+                border="1px solid"
+                borderColor={error?.message ? "red.500" : "gray.300"}
+                {...rest}
+              />
 
-          {error?.message && (
-            <FormErrorMessage>{error.message}</FormErrorMessage>
-          )}
-        </Stack>
-      )}
+              {rightIcon && (
+                <InputRightElement pointerEvents="none">
+                  {rightIcon}
+                </InputRightElement>
+              )}
+            </InputGroup>
+
+            {error?.message && <Text color="error">{error.message}</Text>}
+          </Stack>
+        );
+      }}
     />
   );
 }
