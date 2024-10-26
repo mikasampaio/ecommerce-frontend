@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from "react-hook-form";
 import InputText from "@/components/Input";
 import Button from "@/components/Button";
-import { HStack, Link, Text, VStack, useToast } from "@chakra-ui/react";
+import { HStack, Link, Text, VStack } from "@chakra-ui/react";
 import {
   AiOutlineEye,
   AiOutlineEyeInvisible,
@@ -9,47 +9,22 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { AuthenticationService } from "@/services/authentication";
-import { ErrorHandler } from "@/errors/errorHandler";
 import { LoginProps, LoginSchema } from "@/schemas/login";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUser } from "@/contexts/userContext";
 
 export default function Login() {
-  const toast = useToast();
+  const { signIn, isLoading } = useUser();
 
-  const router = useRouter();
   const methods = useForm<LoginProps>({
     resolver: zodResolver(LoginSchema),
   });
   const { handleSubmit } = methods;
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const onSubmit = async (data: LoginProps) => {
-    try {
-      setIsLoading(true);
-      await AuthenticationService.login({
-        email: data.email,
-        password: data.password,
-      });
-
-      toast({
-        position: "top-right",
-        duration: 3000,
-        isClosable: true,
-        title: "Sucesso",
-        description: "Login efetuado com sucesso",
-        status: "success",
-      });
-
-      router.push("/home");
-    } catch (error) {
-      ErrorHandler({ error, defaultMessage: "Erro ao realizar login", toast });
-    } finally {
-      setIsLoading(false);
-    }
+    await signIn(data);
   };
 
   return (
@@ -108,6 +83,7 @@ export default function Login() {
               onClick={handleSubmit(onSubmit)}
               isLoading={isLoading}
               isDisabled={isLoading}
+              type="button"
             />
           </VStack>
           <Text>

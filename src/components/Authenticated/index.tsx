@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Header from "../Header";
 import { Box, Stack } from "@chakra-ui/react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useUser } from "@/contexts/userContext";
 
 interface AuthenticationProps {
   children: ReactNode;
@@ -9,6 +10,16 @@ interface AuthenticationProps {
 
 export default function Authenticated({ children }: AuthenticationProps) {
   const methods = useForm();
+  const { user } = useUser();
+
+  useEffect(() => {
+    methods.reset({
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      email: user?.email,
+    });
+  }, [user]);
+
   return (
     <FormProvider {...methods}>
       <Box

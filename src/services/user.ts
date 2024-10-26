@@ -1,4 +1,5 @@
 import api from "./api";
+import { Status } from "./types";
 
 export enum UserType {
   ADMIN = "ADMIN",
@@ -6,10 +7,12 @@ export enum UserType {
 }
 
 export interface User {
+  _id: string;
   firstName: string;
   lastName: string;
   email: string;
   type: UserType;
+  status: Status;
 }
 
 export interface RegisterUser {

@@ -70,6 +70,33 @@ export default function Header() {
             </ButtonIcon>
           )
         )}
+
+        {/* <Menu>
+          <MenuButton
+            aria-label="Options"
+            icon={<AiOutlineUser />}
+            variant="ghost"
+            as={IconButton}
+          />
+          <MenuList>
+            <MenuItem
+              icon={<AiOutlineUser />}
+              onClick={() => {
+                router.push("/perfil");
+              }}
+            >
+              Perfil
+            </MenuItem>
+            <MenuItem
+              icon={<MdLogout />}
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Sair
+            </MenuItem>
+          </MenuList>
+        </Menu> */}
       </ContainerItems>
     </Container>
   );
