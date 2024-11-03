@@ -23,21 +23,18 @@ export default function Authenticated({ children }: AuthenticationProps) {
   return (
     <FormProvider {...methods}>
       <Box
-        w="100vw"
-        paddingX={{
-          base: "1rem",
-          md: "4rem",
-        }}
-        paddingY={{
-          base: "1rem",
-          md: "1.5rem",
-        }}
+        // paddingX={{
+        //   base: "1rem",
+        //   md: "4rem",
+        // }}
+        // paddingY={{
+        //   base: "1rem",
+        //   md: "1.5rem",
+        // }}
       >
         <Header />
 
-        <Stack paddingY="1rem" gap="1rem">
-          {children}
-        </Stack>
+        <Stack gap="1rem">{children}</Stack>
       </Box>
     </FormProvider>
   );

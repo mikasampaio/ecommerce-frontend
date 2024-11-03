@@ -1,5 +1,5 @@
 export interface Status {
-  createdAt: Date;
+  createdAt: string;
   updatedAt: Date | null;
   deletedAt: Date | null;
 }

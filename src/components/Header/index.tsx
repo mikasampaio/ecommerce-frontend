@@ -1,16 +1,26 @@
 import { useRouter } from "next/navigation";
-import { ButtonIcon, Container, ContainerItems } from "./styles";
+import { ButtonIcon } from "./styles";
 import {
   AiOutlineSearch,
   AiOutlineShoppingCart,
   AiOutlineUser,
 } from "react-icons/ai";
 import { AiOutlineHeart } from "react-icons/ai";
-import { Link } from "@chakra-ui/react";
+import {
+  HStack,
+  Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import InputText from "../Input";
+import { MdLogout } from "react-icons/md";
+import { useUser } from "@/contexts/userContext";
 
 export default function Header() {
+  const { signOut } = useUser();
   const router = useRouter();
   const [showSearch, setShowSearch] = useState(false);
 
@@ -33,18 +43,22 @@ export default function Header() {
       icon: <AiOutlineShoppingCart fontSize={"1.5rem"} />,
       url: "/carrinho",
     },
-    {
-      label: "Perfil",
-      icon: <AiOutlineUser fontSize={"1.5rem"} />,
-      url: "/perfil",
-    },
   ];
 
   return (
-    <Container>
+    <HStack
+      position="fixed"
+      zIndex={1}
+      bg="white"
+      w="100%"
+      justifyContent="space-between"
+      padding="1.25rem"
+      borderBottom="1px solid"
+      borderColor="gray.100"
+    >
       <Link href="/home">Página inicial</Link>
 
-      <ContainerItems>
+      <HStack gap="1.5rem">
         {options.map((option) =>
           option.label == "Pesquisa" ? (
             showSearch ? (
@@ -71,13 +85,10 @@ export default function Header() {
           )
         )}
 
-        {/* <Menu>
-          <MenuButton
-            aria-label="Options"
-            icon={<AiOutlineUser />}
-            variant="ghost"
-            as={IconButton}
-          />
+        <Menu>
+          <MenuButton>
+            <AiOutlineUser fontSize={"1.5rem"} />
+          </MenuButton>
           <MenuList>
             <MenuItem
               icon={<AiOutlineUser />}
@@ -90,14 +101,14 @@ export default function Header() {
             <MenuItem
               icon={<MdLogout />}
               onClick={() => {
-                router.push("/login");
+                signOut();
               }}
             >
               Sair
             </MenuItem>
           </MenuList>
-        </Menu> */}
-      </ContainerItems>
-    </Container>
+        </Menu>
+      </HStack>
+    </HStack>
   );
 }

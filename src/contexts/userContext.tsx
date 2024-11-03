@@ -40,17 +40,22 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       try {
         const response = await AuthenticationService.bearerToken({ token });
 
+        api.interceptors.request.use((config) => {
+          config.headers.Authorization = `Bearer ${token}`;
+          return config;
+        });
+
         if (response.status === 200) {
           setUser(response.data);
-
-          api.interceptors.request.use((config) => {
-            config.headers.Authorization = `Bearer ${token}`;
-            return config;
-          });
         }
       } catch (error: unknown) {
         console.log(error);
         signOut();
+        ErrorHandler({
+          error,
+          defaultMessage: "Erro ao realizar login",
+          toast,
+        });
       } finally {
         setIsLoading(false);
       }
@@ -67,6 +72,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       if (response) {
         setUser(response);
+        api.interceptors.request.use((config) => {
+          config.headers.Authorization = `Bearer ${response.token}`;
+          return config;
+        });
         localStorage.setItem("token", response.token);
 
         toast({

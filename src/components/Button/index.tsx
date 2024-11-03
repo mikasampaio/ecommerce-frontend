@@ -2,9 +2,10 @@ import {
   Button as ButtonChakra,
   ButtonProps as ButtonCProps,
 } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 type ButtonProps = ButtonCProps & {
-  label: string;
+  label: string | ReactNode;
 };
 
 export default function Button({ label, w, ...props }: ButtonProps) {
