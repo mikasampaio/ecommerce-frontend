@@ -19,9 +19,10 @@ import Button from "../Button";
 
 type CardProps = {
   product: Product;
+  isFavorited?: boolean;
 };
 
-export default function ProductCard({ product }: CardProps) {
+export default function ProductCard({ product, isFavorited }: CardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
@@ -53,8 +54,8 @@ export default function ProductCard({ product }: CardProps) {
           padding={0}
           onClick={() => setIsFavorite(!isFavorite)}
         >
-          {isFavorite ? (
-            <MdFavorite fontSize="1.3rem" color={"red"} />
+          {isFavorite || isFavorited ? (
+            <MdFavorite fontSize="1.3rem" color={"#c53030"} />
           ) : (
             <MdFavoriteBorder fontSize="1.3rem" />
           )}

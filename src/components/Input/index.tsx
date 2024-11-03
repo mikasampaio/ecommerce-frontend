@@ -24,6 +24,7 @@ export default function InputText({
   placeholder,
   rightIcon,
   leftIcon,
+  width,
   ...rest
 }: InputTextProps) {
   const { control } = useFormContext();
@@ -36,7 +37,7 @@ export default function InputText({
         fieldState: { error },
       }) => {
         return (
-          <Stack width="100%">
+          <Stack width={width || "auto"}>
             {label && (
               <FormLabel
                 margin="0"
