@@ -62,50 +62,47 @@ export default function ProductCard({ product, isFavorited }: CardProps) {
         </CButton>
       </Stack>
 
-      {product.stock.map((data) => (
-        <HStack
-          justifyContent="space-between"
-          alignItems="end"
-          width="100%"
-          height="100%"
-          p={4}
-          background="white"
-          key={data._id}
-        >
-          <VStack alignItems="flex-start">
-            <Text fontWeight="400">{product.name}</Text>
+      <HStack
+        justifyContent="space-between"
+        alignItems="end"
+        width="100%"
+        height="100%"
+        p={4}
+        background="white"
+      >
+        <VStack alignItems="flex-start">
+          <Text fontWeight="400">{product.name}</Text>
 
-            <HStack>
-              <Text
-                fontWeight="600"
-                fontSize="lg"
-                textDecoration={product.discount ? "line-through" : "none"}
-              >
-                {formatCurrency(product.price)}
+          <HStack>
+            <Text
+              fontWeight="600"
+              fontSize="lg"
+              textDecoration={product.discount ? "line-through" : "none"}
+            >
+              {formatCurrency(product.price)}
+            </Text>
+
+            {product.discount && (
+              <Text fontWeight="600" color="red.500">
+                {formatCurrency(
+                  product.price - (product.discount as number) * 100
+                )}
               </Text>
+            )}
+          </HStack>
 
-              {product.discount && (
-                <Text fontWeight="600" color="red.500">
-                  {formatCurrency(
-                    product.price - (product.discount as number) * 100
-                  )}
-                </Text>
-              )}
-            </HStack>
+          <Colors colors={product.variants.map(({ color }) => color)} />
+        </VStack>
 
-            <Colors colors={[data.color as string]} />
-          </VStack>
-
-          <Button
-            backgroundColor="primary"
-            color="white"
-            width="40px"
-            height="40px"
-            padding={0}
-            label={<MdOutlineShoppingCart fontSize="1.3rem" />}
-          ></Button>
-        </HStack>
-      ))}
+        <Button
+          backgroundColor="primary"
+          color="white"
+          width="40px"
+          height="40px"
+          padding={0}
+          label={<MdOutlineShoppingCart fontSize="1.3rem" />}
+        ></Button>
+      </HStack>
     </VStack>
   );
 }

@@ -37,7 +37,7 @@ export default function InputText({
         fieldState: { error },
       }) => {
         return (
-          <Stack width={width || "auto"}>
+          <Stack width={width || "100%"}>
             {label && (
               <FormLabel
                 margin="0"

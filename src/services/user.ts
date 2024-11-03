@@ -24,6 +24,36 @@ export interface RegisterUser {
 }
 
 export class UserService {
+  static async get(): Promise<User[]> {
+    const response = await api.get<User[]>("/user");
+
+    return response.data;
+  }
+
+  static async getUserById(id: string): Promise<User> {
+    const response = await api.get<User>(`/user/`, {
+      params: { id },
+    });
+
+    return response.data;
+  }
+
+  static async updateUser(data: Partial<User>, id: string): Promise<User> {
+    const response = await api.put(`/user`, data, {
+      params: { id },
+    });
+
+    return response.data;
+  }
+
+  static async deleteUser(id: string): Promise<string> {
+    const response = await api.delete(`/user`, {
+      params: { id },
+    });
+
+    return response.data;
+  }
+
   static async registerUser(data: RegisterUser): Promise<User> {
     const response = await api.post("/user", data);
 

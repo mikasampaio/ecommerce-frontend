@@ -2,7 +2,7 @@ import Authenticated from "@/components/Authenticated";
 import DeliveryInformation from "@/components/Cart/DeliveryInformation";
 import OrderSummary from "@/components/Cart/OrderSummary";
 import ProductCart from "@/components/Cart/Products";
-import { Stack } from "@chakra-ui/react";
+import { Box, Stack, VStack } from "@chakra-ui/react";
 
 export default function Carrinho() {
   const user = {
@@ -39,19 +39,22 @@ export default function Carrinho() {
 
   return (
     <Authenticated>
-      <Stack
-        flexDirection={{
-          base: "column",
-          md: "row",
-        }}
-        alignItems="flex-start"
-        gap="1.5rem"
-      >
-        <ProductCart products={products} />
-        <OrderSummary products={products} />
-      </Stack>
+      <VStack alignItems="flex-start" padding="1.25rem">
+        <Stack
+          flexDirection={{
+            base: "column",
+            md: "row",
+          }}
+          alignItems="flex-start"
+          gap="1.5rem"
+          w="100%"
+        >
+          <ProductCart products={products} />
+          <OrderSummary products={products} />
+        </Stack>
 
-      <DeliveryInformation user={user} />
+        <DeliveryInformation user={user} />
+      </VStack>
     </Authenticated>
   );
 }

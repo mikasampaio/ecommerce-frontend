@@ -8,31 +8,19 @@ export interface Category {
 }
 
 export enum Size {
-  S = "S", // Pequeno
+  PP = "PP",
+  P = "P", // Pequeno
   M = "M", // Médio
-  L = "L", // Grande
-  XL = "XL", // Extra Grande
-  XXL = "XXL", // Duplo Extra Grande
+  G = "G", // Grande
+  GG = "GG", // Extra Grande
+  XG = "XG", // Duplo Extra Grande
 }
-
-export interface Color {
-  name: string;
-  hex: string;
-}
-
-export interface Variation {
+export interface Variant {
   name?: string;
-  size?: Size;
-  quantity?: number;
   path?: string[];
-  description?: string;
-}
-
-export interface Stock {
-  _id?: number;
-  color?: string;
-  variations?: Variation[];
-  status?: Status;
+  size: Size;
+  quantity: number;
+  color: string;
 }
 
 export interface Product {
@@ -41,13 +29,55 @@ export interface Product {
   price: number;
   discount: number | null;
   category: Category;
-  stock: Stock[];
+  description: string;
+  variants: Variant[];
   status: Status;
+}
+
+export interface CreateProductData {
+  name: string;
+  price: number;
+  discount: number | null;
+  category: Category;
+  variants: Variant[];
 }
 
 export class ProductService {
   static async get(): Promise<Product[]> {
     const response = await api.get<Product[]>("/product");
+
+    return response.data;
+  }
+
+  static async getById(id: string): Promise<Product> {
+    const response = await api.get<Product>("/product", {
+      params: { id },
+    });
+
+    return response.data;
+  }
+
+  static async create(data: CreateProductData): Promise<Product> {
+    const response = await api.post<Product>("/product", data);
+
+    return response.data;
+  }
+
+  static async update(
+    data: Partial<CreateProductData>,
+    id: string
+  ): Promise<Product> {
+    const response = await api.put<Product>("/product", data, {
+      params: { id },
+    });
+
+    return response.data;
+  }
+
+  static async delete(id: string): Promise<string> {
+    const response = await api.delete("/product", {
+      params: { id },
+    });
 
     return response.data;
   }

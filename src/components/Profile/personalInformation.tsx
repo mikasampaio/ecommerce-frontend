@@ -1,6 +1,6 @@
 import InputText from "@/components/Input";
 import { Grid, GridItem, Heading } from "@chakra-ui/react";
-import { AiOutlineMail, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineMail, AiOutlinePhone, AiOutlineUser } from "react-icons/ai";
 
 export default function PersonalInformation() {
   return (
@@ -48,6 +48,13 @@ export default function PersonalInformation() {
         label="E-mail"
         placeholder="example@example.com"
         leftIcon={<AiOutlineMail />}
+      ></InputText>
+
+      <InputText
+        name="phone"
+        label="Telefone"
+        placeholder="Celular, telefone..."
+        leftIcon={<AiOutlinePhone />}
       ></InputText>
     </Grid>
   );

@@ -1,48 +1,29 @@
+import { Category, CategoryService } from "@/services/categories";
 import { Center, HStack, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Categories() {
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isClicked, setIsClicked] = useState(0);
 
-  const categories = [
-    {
-      id: 1,
-      name: "Cabelo",
-    },
-    {
-      id: 2,
-      name: "Barba",
-    },
-    {
-      id: 3,
-      name: "Maquiagem",
-    },
-    {
-      id: 4,
-      name: "Depilação",
-    },
-    {
-      id: 5,
-      name: "Higiene",
-    },
-    {
-      id: 6,
-      name: "Estética",
-    },
-    {
-      id: 7,
-      name: "Saúde",
-    },
-    {
-      id: 8,
-      name: "Beleza",
-    },
-  ];
+  const getCategories = async () => {
+    try {
+      const response = await CategoryService.get();
+
+      setCategories(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   return (
     <HStack p="1.25rem" gap={6}>
       {categories.map((category, index) => (
-        <VStack key={category.id}>
+        <VStack key={category._id}>
           <Center
             w="90px"
             h="90px"

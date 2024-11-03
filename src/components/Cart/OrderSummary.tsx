@@ -74,11 +74,16 @@ export default function OrderSummary({ products }: OrderSummaryProps) {
 
         <Stack>
           <Heading as="h6" size="sm">
-            Produtos
+            Produtos ({orderSummary.quantity})
           </Heading>
 
           <HStack justifyContent="space-between">
-            <Text>Total de itens: {orderSummary.quantity}</Text>
+            <Text>Subtotal: </Text>
+            <Text>{formatCurrency(orderSummary.total)}</Text>
+          </HStack>
+
+          <HStack justifyContent="space-between">
+            <Text>Desconto: </Text>
             <Text>{formatCurrency(orderSummary.total)}</Text>
           </HStack>
         </Stack>

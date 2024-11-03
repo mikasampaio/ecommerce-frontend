@@ -25,12 +25,14 @@ export default function Favoritos() {
               Favoritos
             </Heading>
 
-            <InputText
-              name="searchFavorite"
-              label=""
-              placeholder="Pesquisar..."
-              rightIcon={<AiOutlineSearch fontSize="1.5rem" />}
-            />
+            <Box>
+              <InputText
+                name="searchFavorite"
+                label=""
+                placeholder="Pesquisar..."
+                rightIcon={<AiOutlineSearch fontSize="1.5rem" />}
+              />
+            </Box>
           </HStack>
 
           <HStack h="100%" w="100%">
