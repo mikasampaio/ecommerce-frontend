@@ -1,5 +1,5 @@
 import { Category, CategoryService } from "@/services/categories";
-import { Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 export default function Categories() {
@@ -20,24 +20,30 @@ export default function Categories() {
     getCategories();
   }, []);
 
+  console.log(categories);
+
   return (
     <HStack p="1.25rem" gap={6}>
       {categories.map((category, index) => (
         <VStack key={category._id}>
-          <Center
-            w="90px"
-            h="90px"
-            bg="gray.300"
+          <Box
+            w="100px"
+            h="100px"
             color="white"
             borderRadius="full"
             borderWidth={isClicked === index ? "3px" : "none"}
             borderColor={isClicked === index ? "primary" : "none"}
-            p={4}
             cursor="pointer"
             onClick={() => {
               setIsClicked(index);
             }}
-          />
+            overflow="hidden"
+            objectFit={"cover"}
+            objectPosition="top"
+          >
+            <Image src={category.url} alt={category.name} />
+          </Box>
+
           <Text>{category.name}</Text>
         </VStack>
       ))}

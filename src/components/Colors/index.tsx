@@ -1,23 +1,46 @@
-import { HStack, Stack } from "@chakra-ui/react";
+import { Box, HStack, Stack } from "@chakra-ui/react";
+import { useState } from "react";
 
 type ColorProps = {
   colors: string[];
+  width?: string;
+  height?: string;
+  setSelectedColor: (color: string) => void;
 };
 
-export default function Colors({ colors }: ColorProps) {
-  console.log(colors);
-  
+export default function Colors({
+  colors,
+  width = "15px",
+  height = "15px",
+  setSelectedColor,
+}: ColorProps) {
+  const [isActive, setIsActive] = useState<number>(0);
+
   return (
     <HStack w="100%">
       {colors.map((color, index) => (
         <Stack
           key={index}
-          width="15px"
-          height="15px"
-          backgroundColor={color}
+          justifyContent="center"
+          alignItems="center"
+          border={isActive === index ? "1px solid black" : "none"}
+          padding="0.5"
           borderRadius="full"
-          margin="0.5rem 0"
-        />
+          width={width}
+          height={height}
+          onClick={() => {
+            setIsActive(index);
+            setSelectedColor(color);
+          }}
+          cursor="pointer"
+        >
+          <Box
+            width="100%"
+            height="100%"
+            backgroundColor={color}
+            borderRadius="full"
+          />
+        </Stack>
       ))}
     </HStack>
   );

@@ -76,6 +76,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
           config.headers.Authorization = `Bearer ${response.token}`;
           return config;
         });
+
         localStorage.setItem("token", response.token);
 
         toast({

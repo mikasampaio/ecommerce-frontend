@@ -2,12 +2,17 @@ import { Button, HStack, useNumberInput, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
-export default function InputStepper() {
+interface InputStepperProps {
+  max?: number;
+}
+
+export default function InputStepper({ max }: InputStepperProps) {
   const methods = useFormContext();
   const { setValue } = methods;
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       min: 1,
+      max,
       defaultValue: 0,
     });
 

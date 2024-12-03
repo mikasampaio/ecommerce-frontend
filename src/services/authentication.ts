@@ -17,7 +17,6 @@ export class AuthenticationService {
     const response = await api.post<User>("/session", undefined, {
       headers: {
         Authorization: `Bearer ${token}`,
-        
       },
     });
 

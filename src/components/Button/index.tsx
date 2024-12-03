@@ -6,13 +6,22 @@ import { ReactNode } from "react";
 
 type ButtonProps = ButtonCProps & {
   label: string | ReactNode;
+  primary?: boolean;
 };
 
-export default function Button({ label, w, ...props }: ButtonProps) {
+export default function Button({
+  label,
+  primary = true,
+  w,
+  ...props
+}: ButtonProps) {
   return (
     <ButtonChakra
       color="white"
-      bgColor={"primary"}
+      bgColor={primary ? "primary" : "transparent"}
+      border={primary ? "none" : "1px solid"}
+      borderColor={primary ? "none" : "primary"}
+      textColor={primary ? "white" : "primary"}
       _hover={{
         opacity: 0.9,
       }}

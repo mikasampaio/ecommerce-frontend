@@ -16,6 +16,7 @@ import {
 } from "react-icons/md";
 import Colors from "../Colors";
 import Button from "../Button";
+import { useRouter } from "next/navigation";
 
 type CardProps = {
   product: Product;
@@ -24,6 +25,7 @@ type CardProps = {
 
 export default function ProductCard({ product, isFavorited }: CardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
+  const router = useRouter();
 
   return (
     <VStack
@@ -32,6 +34,8 @@ export default function ProductCard({ product, isFavorited }: CardProps) {
       overflow="hidden"
       gap={0}
       boxShadow="rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px"
+      cursor="pointer"
+      onClick={() => router.push(`/produto/${product._id}`)}
     >
       <Stack width="100%" position="relative" backgroundColor="gray.primary">
         <Image
