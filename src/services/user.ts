@@ -1,4 +1,5 @@
 import api from "./api";
+import { Product } from "./products";
 import { Status } from "./types";
 
 export enum UserType {
@@ -13,6 +14,7 @@ export interface User {
   email: string;
   type: UserType;
   status: Status;
+  favorites?: string[];
 }
 
 export interface RegisterUser {
@@ -21,6 +23,13 @@ export interface RegisterUser {
   email: string;
   type: UserType;
   password: string;
+}
+
+export interface FavoriteProduct {
+  _id: string;
+  name: string;
+  price: number;
+  discount: number;
 }
 
 export class UserService {
@@ -56,6 +65,22 @@ export class UserService {
 
   static async registerUser(data: RegisterUser): Promise<User> {
     const response = await api.post("/user", data);
+
+    return response.data;
+  }
+
+  static async getFavorites(): Promise<Product[]> {
+    const response = await api.get("/user/favorites");
+
+    return response.data;
+  }
+
+  static async addFavorites(product: string): Promise<User> {
+    const response = await api.put("/user/favorites", undefined, {
+      params: {
+        product,
+      },
+    });
 
     return response.data;
   }

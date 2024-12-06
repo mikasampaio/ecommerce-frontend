@@ -5,7 +5,7 @@ type ColorProps = {
   colors: string[];
   width?: string;
   height?: string;
-  setSelectedColor: (color: string) => void;
+  setSelectedColor?: (color: string) => void;
 };
 
 export default function Colors({
@@ -30,7 +30,7 @@ export default function Colors({
           height={height}
           onClick={() => {
             setIsActive(index);
-            setSelectedColor(color);
+            setSelectedColor?.(color);
           }}
           cursor="pointer"
         >

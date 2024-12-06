@@ -4,16 +4,17 @@ import { useFormContext } from "react-hook-form";
 
 interface InputStepperProps {
   max?: number;
+  defaultValue?: number;
 }
 
-export default function InputStepper({ max }: InputStepperProps) {
+export default function InputStepper({ max, defaultValue = 0 }: InputStepperProps) {
   const methods = useFormContext();
   const { setValue } = methods;
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
     useNumberInput({
       min: 1,
       max,
-      defaultValue: 0,
+      defaultValue,
     });
 
   const increment = getIncrementButtonProps();

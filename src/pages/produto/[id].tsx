@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -17,14 +18,19 @@ import Sizes from "@/components/Sizes";
 import InputStepper from "@/components/Cart/InputStepper";
 import Button from "@/components/Button";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { UserService } from "@/services/user";
+import { useUser } from "@/contexts/userContext";
 
 export default function AboutProduct() {
   const { query } = useRouter();
   const productId = query.id as string;
+  const { user } = useUser();
+
+  const toast = useToast();
 
   const [product, setProduct] = useState<Product>();
   const [selectedColor, setSelectedColor] = useState<string>("");
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorited, setIsFavorited] = useState<boolean>(false);
 
   const getProducts = async () => {
     try {
@@ -38,6 +44,43 @@ export default function AboutProduct() {
   useEffect(() => {
     getProducts();
   }, [productId]);
+
+  useEffect(() => {
+    setIsFavorited(
+      user?.favorites?.includes(product?._id as string) as boolean
+    );
+  }, [product, user]);
+
+  const handleFavoriteProduct = async (data?: string) => {
+    if (!user)
+      return toast({
+        title: "Favorito",
+        description: "Usuário não autenticado",
+        status: "warning",
+        duration: 3000,
+      });
+
+    try {
+      const response = await UserService.addFavorites(data as string);
+      toast({
+        title: "Favorito",
+        description: "Produto favoritado com sucesso",
+        status: "success",
+        duration: 3000,
+      });
+
+      setIsFavorited(
+        response.favorites?.includes(product?._id as string) as boolean
+      );
+    } catch (error) {
+      toast({
+        title: "Favorito",
+        description: "Erro ao favoritar produto",
+        status: "error",
+        duration: 3000,
+      });
+    }
+  };
 
   useEffect(() => {
     setSelectedColor(product?.variants?.[0].color as string);
@@ -89,17 +132,17 @@ export default function AboutProduct() {
                 Casaco feminino
               </Heading>
 
-              {isFavorite ? (
+              {isFavorited ? (
                 <MdFavorite
                   fontSize="2rem"
                   color={"#c53030"}
-                  onClick={() => setIsFavorite(!isFavorite)}
+                  onClick={() => handleFavoriteProduct(product?._id as string)}
                   cursor="pointer"
                 />
               ) : (
                 <MdFavoriteBorder
                   fontSize="2rem"
-                  onClick={() => setIsFavorite(!isFavorite)}
+                  onClick={() => handleFavoriteProduct(product?._id as string)}
                   cursor="pointer"
                 />
               )}
@@ -161,6 +204,7 @@ export default function AboutProduct() {
 
               <HStack>
                 <InputStepper
+                  defaultValue={1}
                   max={
                     product?.variants?.find(
                       ({ color }) => color === selectedColor
