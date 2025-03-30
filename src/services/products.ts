@@ -1,6 +1,14 @@
 import api from "./api";
 import { Status } from "./types";
 
+interface GetParams {
+  search?: string;
+  category?: string;
+  size?: Size;
+  minPrice?: number;
+  maxPrice?: number;
+}
+
 export interface Category {
   _id: string;
   name: string;
@@ -43,8 +51,22 @@ export interface CreateProductData {
 }
 
 export class ProductService {
-  static async get(): Promise<Product[]> {
-    const response = await api.get<Product[]>("/product");
+  static async get({
+    category,
+    maxPrice,
+    minPrice,
+    search,
+    size,
+  }: GetParams): Promise<Product[]> {
+    const response = await api.get<Product[]>("/product", {
+      params: {
+        category,
+        maxPrice,
+        minPrice,
+        search,
+        size,
+      },
+    });
 
     return response.data;
   }

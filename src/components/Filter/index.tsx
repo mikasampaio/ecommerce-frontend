@@ -1,6 +1,8 @@
 import { HStack, Text, VStack } from "@chakra-ui/react";
 import Select from "../Select";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
+import InputText from "../Input";
+import { Size } from "@/services/products";
 
 export default function Filters() {
   return (
@@ -16,28 +18,45 @@ export default function Filters() {
 
       <HStack justifyContent={"space-between"} w="100%">
         <HStack width="40%">
+          <InputText
+            name={"search"}
+            label={""}
+            placeholder="Pesquisar Produto"
+            rightIcon={<AiOutlineSearch fontSize="1.5rem" />}
+          />
           <Select
             name="size"
             placeholder="Tamanho"
             options={[
-              { value: "small", label: "Pequeno" },
-              { value: "medium", label: "Médio" },
-              { value: "large", label: "Grande" },
-            ]}
-          />
-
-          <Select
-            name="category"
-            placeholder="Categoria"
-            options={[
-              { value: "electronics", label: "Eletrônicos" },
-              { value: "clothing", label: "Roupas" },
-              { value: "accessories", label: "Acessórios" },
+              {
+                label: "PP",
+                value: Size.PP,
+              },
+              {
+                label: "P",
+                value: Size.P,
+              },
+              {
+                label: "M",
+                value: Size.M,
+              },
+              {
+                label: "G",
+                value: Size.G,
+              },
+              {
+                label: "GG",
+                value: Size.GG,
+              },
+              {
+                label: "XG",
+                value: Size.XG,
+              },
             ]}
           />
         </HStack>
 
-        <HStack>
+        {/*  <HStack>
           <Text fontWeight={600}>Filtros aplicados:</Text>
 
           <HStack
@@ -54,7 +73,7 @@ export default function Filters() {
               }}
             />
           </HStack>
-        </HStack>
+        </HStack> */}
       </HStack>
     </VStack>
   );

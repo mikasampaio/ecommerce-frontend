@@ -28,6 +28,7 @@ export default function InputText({
   ...rest
 }: InputTextProps) {
   const { control } = useFormContext();
+  
   return (
     <Controller
       control={control}
@@ -57,6 +58,7 @@ export default function InputText({
               )}
 
               <Input
+                name={name}
                 placeholder={placeholder}
                 onBlur={onBlur}
                 onChange={onChange}

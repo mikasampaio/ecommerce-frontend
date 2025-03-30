@@ -6,6 +6,7 @@ type ColorProps = {
   width?: string;
   height?: string;
   setSelectedColor?: (color: string) => void;
+  isView?: boolean;
 };
 
 export default function Colors({
@@ -13,6 +14,7 @@ export default function Colors({
   width = "15px",
   height = "15px",
   setSelectedColor,
+  isView = false,
 }: ColorProps) {
   const [isActive, setIsActive] = useState<number>(0);
 
@@ -29,10 +31,11 @@ export default function Colors({
           width={width}
           height={height}
           onClick={() => {
+            if (isView) return;
             setIsActive(index);
             setSelectedColor?.(color);
           }}
-          cursor="pointer"
+          cursor={isView ? "auto" : "pointer"}
         >
           <Box
             width="100%"

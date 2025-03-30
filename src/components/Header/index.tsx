@@ -25,14 +25,14 @@ export default function Header() {
   const [showSearch, setShowSearch] = useState(false);
 
   const options = [
-    {
-      label: "Pesquisa",
-      icon: <AiOutlineSearch fontSize={"1.5rem"} />,
-      url: "",
-      onClick: () => {
-        setShowSearch(!showSearch);
-      },
-    },
+    // {
+    //   label: "Pesquisa",
+    //   icon: <AiOutlineSearch fontSize={"1.5rem"} />,
+    //   url: "",
+    //   onClick: () => {
+    //     setShowSearch(!showSearch);
+    //   },
+    // },
     {
       label: "Favoritos",
       icon: <AiOutlineHeart fontSize={"1.5rem"} />,
@@ -60,7 +60,7 @@ export default function Header() {
 
       <HStack gap="1.5rem">
         {options.map((option) =>
-          option.label == "Pesquisa" ? (
+     /*      option.label == "Pesquisa" ? (
             showSearch ? (
               <InputText
                 name={"search"}
@@ -73,7 +73,7 @@ export default function Header() {
                 {option.icon}
               </ButtonIcon>
             )
-          ) : (
+          ) : */ (
             <ButtonIcon
               key={option.label}
               onClick={() => {

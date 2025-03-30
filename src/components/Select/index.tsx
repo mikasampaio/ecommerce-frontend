@@ -16,10 +16,6 @@ export default function Select({
   ...rest
 }: InputTextProps) {
   const selectOptions = [
-    {
-      value: "",
-      label: "Nenhum",
-    },
     ...options.map((option) => ({
       value: option.value,
       label: option.label,

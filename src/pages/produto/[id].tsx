@@ -72,7 +72,7 @@ export default function AboutProduct() {
       setIsFavorited(
         response.favorites?.includes(product?._id as string) as boolean
       );
-    } catch (error) {
+    } catch {
       toast({
         title: "Favorito",
         description: "Erro ao favoritar produto",
