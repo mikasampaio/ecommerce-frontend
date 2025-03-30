@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Product } from "@/services/products";
 import { formatCurrency } from "@/utils/formatCurrency";
 import {
@@ -6,9 +7,9 @@ import {
   Image,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import {
   MdFavorite,
   MdFavoriteBorder,
@@ -16,15 +17,46 @@ import {
 } from "react-icons/md";
 import Button from "../../Button";
 import { useRouter } from "next/navigation";
+import { UserService } from "@/services/user";
+import { useUser } from "@/contexts/userContext";
 
 type CardProps = {
   product: Product;
   isFavorited?: boolean;
+  refresh: () => void;
 };
 
-export default function FavoriteProducts({ product, isFavorited }: CardProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function FavoriteProducts({
+  product,
+  isFavorited,
+  refresh,
+}: CardProps) {
   const router = useRouter();
+  const toast = useToast();
+  const { user } = useUser();
+
+  const handleFavoriteProduct = async (data: string) => {
+    if (!user)
+      return toast({
+        title: "Favorito",
+        description: "Usuário não autenticado",
+        status: "warning",
+        duration: 3000,
+      });
+
+    try {
+      await UserService.addFavorites(data as string);
+
+      refresh();
+    } catch (err) {
+      toast({
+        title: "Favorito",
+        description: "Erro ao remover produto do favorito. Tente novamente!",
+        status: "error",
+        duration: 3000,
+      });
+    }
+  };
 
   return (
     <VStack
@@ -66,9 +98,9 @@ export default function FavoriteProducts({ product, isFavorited }: CardProps) {
         width="40px"
         height="40px"
         padding={0}
-        onClick={() => setIsFavorite(!isFavorite)}
+        onClick={() => handleFavoriteProduct(product._id as string)}
       >
-        {isFavorite || isFavorited ? (
+        {isFavorited ? (
           <MdFavorite fontSize="1.3rem" color={"#c53030"} />
         ) : (
           <MdFavoriteBorder fontSize="1.3rem" />

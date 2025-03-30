@@ -1,5 +1,5 @@
 import { Product } from "@/services/products";
-import { Heading, HStack, VStack } from "@chakra-ui/react";
+import { Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import ProductCard from "../Card";
 
 type MainProductProps = {
@@ -13,10 +13,14 @@ export default function MainProduct({ products }: MainProductProps) {
         Em destaque
       </Heading>
 
-      <HStack>
-        {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
+      <HStack w="100%">
+        {!products.length ? (
+          <Text w="100%">Nenhum resultado encontrado</Text>
+        ) : (
+          products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))
+        )}
       </HStack>
     </VStack>
   );
