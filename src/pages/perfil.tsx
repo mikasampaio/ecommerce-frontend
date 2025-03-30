@@ -7,7 +7,6 @@ import { userTypeOptions } from "@/utils/userType";
 import {
   Avatar,
   AvatarGroup,
-  Heading,
   HStack,
   Stack,
   Text,
@@ -21,9 +20,6 @@ export default function Carrinho() {
   return (
     <Authenticated>
       <VStack alignItems="start" padding="1.25rem" gap="1rem">
-        <Heading as="h1" size="md">
-          Meu Perfil
-        </Heading>
         <HStack>
           <AvatarGroup>
             <Avatar

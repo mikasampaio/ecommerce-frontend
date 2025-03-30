@@ -69,8 +69,14 @@ export class UserService {
     return response.data;
   }
 
-  static async getFavorites(): Promise<Product[]> {
-    const response = await api.get("/user/favorites");
+  static async getFavorites({
+    search,
+  }: {
+    search?: string;
+  }): Promise<Product[]> {
+    const response = await api.get("/user/favorites", {
+      params: { search },
+    });
 
     return response.data;
   }
